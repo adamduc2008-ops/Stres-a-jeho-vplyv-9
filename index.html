@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stres – komplexný sprievodca duševným zdravím</title>
+
+<style>
+:root{
+--bg1:#0b1c22;
+--bg2:#122a34;
+--bg3:#1f4553;
+--glass:rgba(255,255,255,0.12);
+--accent1:#00c9ff;
+--accent2:#ff7a5a;
+--accent3:#7cffc4;
+--accent4:#c792ff;
+--text:#eaf6ff;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Inter,Segoe UI,Arial,sans-serif;
+background:radial-gradient(circle at top,var(--bg3),var(--bg1));
+color:var(--text);
+overflow-x:hidden;
+}
+
+/* HERO */
+.hero{
+position:relative;
+padding:6rem 2rem 5rem;
+text-align:center;
+}
+
+.hero h1{
+font-size:3.5rem;
+margin:0;
+letter-spacing:1px;
+}
+
+.hero p{
+max-width:900px;
+margin:1.8rem auto 0;
+font-size:1.25rem;
+line-height:1.8;
+opacity:.95;
+}
+
+.orb{
+position:absolute;
+border-radius:50%;
+filter:blur(80px);
+opacity:.35;
+}
+
+.orb.blue{background:#00c9ff;width:300px;height:300px;top:-50px;left:10%}
+.orb.pink{background:#ff7a5a;width:260px;height:260px;top:120px;right:12%}
+
+/* LAYOUT */
+.app{
+display:flex;
+min-height:100vh;
+}
+
+aside{
+width:300px;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(14px);
+padding:2.2rem 1.2rem;
+}
+
+aside h3{
+text-transform:uppercase;
+font-size:.85rem;
+letter-spacing:1px;
+opacity:.7;
+}
+
+.menu button{
+width:100%;
+padding:1rem 1.2rem;
+margin-bottom:.9rem;
+background:var(--glass);
+border:none;
+border-radius:18px;
+color:var(--text);
+font-size:1rem;
+text-align:left;
+cursor:pointer;
+transition:.35s;
+}
+
+.menu button:hover{
+transform:translateX(8px);
+background:linear-gradient(135deg,var(--accent1),var(--accent2));
+}
+
+.menu button.active{
+background:linear-gradient(135deg,var(--accent2),var(--accent1));
+box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+main{
+flex:1;
+padding:3.5rem;
+}
+
+.section{display:none}
+.section.active{display:block}
+
+/* CARD */
+.card{
+position:relative;
+overflow:hidden;
+border-radius:26px;
+padding:3rem;
+margin-bottom:3rem;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+box-shadow:0 30px 60px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+background-image:var(--img);
+background-size:cover;
+background-position:center;
+filter:brightness(.4);
+z-index:0;
+}
+
+.card > *{position:relative;z-index:1}
+
+.badge{
+display:inline-block;
+padding:.4rem 1rem;
+border-radius:999px;
+background:linear-gradient(135deg,var(--accent3),var(--accent1));
+font-size:.8rem;
+letter-spacing:.5px;
+margin-bottom:1rem;
+}
+
+.card h2{
+margin:.6rem 0 1.2rem;
+font-size:2.2rem;
+}
+
+.card p{
+line-height:1.85;
+font-size:1.08rem;
+max-width:900px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:1.8rem;
+margin-top:2rem;
+}
+
+.mini{
+background:rgba(255,255,255,.12);
+padding:1.8rem;
+border-radius:20px;
+transition:.35s;
+}
+
+.mini:hover{
+transform:translateY(-6px);
+background:rgba(255,255,255,.18);
+}
+
+.mini h3{
+margin-top:0;
+color:var(--accent3);
+}
+
+/* TEST */
+.question{margin-bottom:1.4rem}
+
+select{
+margin-top:.4rem;
+padding:.5rem .7rem;
+border-radius:8px;
+border:none;
+}
+
+.progress{
+height:8px;
+background:rgba(255,255,255,.2);
+border-radius:8px;
+overflow:hidden;
+margin:1.5rem 0;
+}
+
+.progress span{
+display:block;
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--accent1),var(--accent2));
+transition:.4s;
+}
+
+button.action{
+padding:1rem 2rem;
+border:none;
+border-radius:30px;
+background:linear-gradient(135deg,var(--accent1),var(--accent2));
+color:white;
+font-size:1rem;
+cursor:pointer;
+}
+
+.result{
+margin-top:1.8rem;
+padding:1.6rem;
+border-radius:18px;
+font-size:1.1rem;
+}
+
+.low{background:rgba(124,255,196,.25)}
+.mid{background:rgba(255,200,100,.25)}
+.high{background:rgba(255,120,120,.25)}
+
+footer{
+text-align:center;
+padding:2.5rem;
+background:#07151a;
+opacity:.85;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+<div class="orb blue"></div>
+<div class="orb pink"></div>
+<h1>Stres & duševné zdravie</h1>
+<p>Interaktívna, vizuálne moderná aplikácia vysvetľujúca stres, jeho dopady a dlhodobé riešenia založené na vedeckých poznatkoch.</p>
+</div>
+
+<div class="app">
+
+<aside>
+<h3>Navigácia</h3>
+<div class="menu">
+<button class="active" onclick="show('home',this)">Úvod & test</button>
+<button onclick="show('nutrition',this)">Výživa</button>
+<button onclick="show('movement',this)">Pohyb</button>
+<button onclick="show('sleep',this)">Spánok</button>
+<button onclick="show('tech',this)">Techniky</button>
+<button onclick="show('help',this)">Pomoc</button>
+</div>
+</aside>
+
+<main>
+
+<div id="home" class="section active">
+<div class="card" style="--img:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f')">
+<span class="badge">ZÁKLADY</span>
+<h2>Čo je stres?</h2>
+<p>Stres je prirodzená reakcia nervového systému na záťaž. Krátkodobo zvyšuje výkon, dlhodobo však vedie k vyčerpaniu.</p>
+</div>
+
+<div class="card" style="--img:url('https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1')">
+<span class="badge">SEBAREFLEXIA</span>
+<h2>Orientačný test stresu</h2>
+<div class="progress"><span id="bar"></span></div>
+<div id="test"></div>
+<button class="action" onclick="evaluate()">Vyhodnotiť výsledok</button>
+<div id="result"></div>
+</div>
+</div>
+
+<!-- ===================== NUTRITION ===================== -->
+<div id="nutrition" class="section">
+  <div class="block">
+    <div class="text">
+      <h2>Zdravá výživa ako základ regulácie stresu</h2>
+
+      <p>
+        Výživa zohráva zásadnú úlohu v regulácii stresovej odpovede organizmu. Mozog,
+        ktorý riadi stresové reakcie, je energeticky mimoriadne náročný orgán a je
+        citlivý na výkyvy hladiny glukózy, nedostatok mikroživín a dlhodobú
+        nevyváženú stravu.
+      </p>
+
+      <p>
+        Pri nepravidelnom stravovaní alebo nadmernej konzumácii jednoduchých cukrov
+        dochádza k prudkým výkyvom hladiny cukru v krvi. Tieto výkyvy aktivujú
+        stresové hormóny, najmä kortizol a adrenalín, čo môže viesť k pocitom
+        podráždenosti, únavy, úzkosti a zhoršenej koncentrácie.
+      </p>
+
+      <p>
+        Bielkoviny sú nevyhnutné pre tvorbu neurotransmiterov, ako sú serotonín,
+        dopamín a noradrenalín, ktoré priamo ovplyvňujú náladu, motiváciu a
+        schopnosť zvládať záťaž. Ich dlhodobý nedostatok môže zhoršovať psychickú
+        odolnosť a zvyšovať náchylnosť na stres.
+      </p>
+
+      <p>
+        Zdravé tuky, najmä omega-3 mastné kyseliny, majú protizápalový účinok a
+        pozitívne ovplyvňujú funkciu nervových buniek. Ich dostatočný príjem je
+        spájaný so zníženým rizikom depresívnych a úzkostných stavov.
+      </p>
+
+      <p>
+        Mikroživiny, ako horčík, zinok a vitamíny skupiny B, sa podieľajú na
+        správnej funkcii nervového systému. Horčík je často označovaný ako
+        „antistresový minerál“, pretože pomáha uvoľňovať svalové napätie a
+        znižovať nervovú dráždivosť.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Pravidelnosť</h3>
+          <p>Stabilný režim stravovania podporuje hormonálnu rovnováhu.</p>
+        </div>
+        <div class="card">
+          <h3>Bielkoviny</h3>
+          <p>Podpora neurotransmiterov a psychickej stability.</p>
+        </div>
+        <div class="card">
+          <h3>Zdravé tuky</h3>
+          <p>Ochrana mozgu a nervových buniek.</p>
+        </div>
+        <div class="card">
+          <h3>Mikroživiny</h3>
+          <p>Horčík, vitamíny B, zinok.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual">
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061" alt="Zdravá výživa">
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MOVEMENT ===================== -->
+<div id="movement" class="section">
+  <div class="block">
+    <div class="text">
+      <h2>Pohyb ako prirodzený regulátor stresu</h2>
+
+      <p>
+        Fyzická aktivita patrí medzi najúčinnejšie nefarmakologické spôsoby zvládania
+        stresu. Pohyb ovplyvňuje nielen svalový aparát, ale aj nervový a hormonálny
+        systém. Počas pohybu dochádza k uvoľňovaniu endorfínov, tzv. hormónov šťastia,
+        ktoré zlepšujú náladu a znižujú vnímanie stresu.
+      </p>
+
+      <p>
+        Pravidelný pohyb pomáha znižovať hladinu kortizolu v krvi a zlepšuje schopnosť
+        organizmu rýchlejšie sa po záťaži vrátiť do rovnovážneho stavu. Z dlhodobého
+        hľadiska zvyšuje psychickú odolnosť a zlepšuje kvalitu spánku.
+      </p>
+
+      <p>
+        Nie je nevyhnutné vykonávať intenzívny športový výkon. Aj mierna aktivita,
+        ako chôdza, strečing alebo rekreačné cvičenie, má preukázateľný pozitívny
+        vplyv na psychické zdravie. Dôležitejšia než intenzita je pravidelnosť.
+      </p>
+
+      <p>
+        Pohyb zároveň slúži ako forma ventilácie psychického napätia. Pomáha
+        odkloniť pozornosť od stresujúcich myšlienok a podporuje vedomé prežívanie
+        prítomného okamihu.
+      </p>
+    </div>
+
+    <div class="visual">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Pohyb a relax">
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HELP ===================== -->
+<div id="help" class="section">
+  <div class="block">
+    <div class="text">
+      <h2>Pomoc, prevencia a vyhľadanie podpory</h2>
+
+      <p>
+        Vyhľadanie pomoci pri dlhodobom strese nie je prejavom slabosti, ale znakom
+        zodpovednosti voči vlastnému zdraviu. Mnohé psychické ťažkosti vznikajú
+        postupne a ich včasné riešenie výrazne znižuje riziko vážnejších problémov.
+      </p>
+
+      <p>
+        Prvým krokom môže byť rozhovor s blízkou osobou – rodinou alebo priateľmi.
+        Zdieľanie problémov pomáha znižovať pocit osamelosti a psychického tlaku.
+      </p>
+
+      <p>
+        V školskom prostredí zohráva významnú úlohu školský psychológ, ktorý môže
+        poskytnúť odborný pohľad, podporu a odporúčania. V prípade potreby môže
+        nasmerovať na ďalšiu odbornú pomoc.
+      </p>
+
+      <p>
+        Pri pretrvávajúcich alebo zhoršujúcich sa ťažkostiach je vhodné obrátiť sa
+        na praktického lekára alebo psychológa. Odborná psychoterapia poskytuje
+        bezpečný priestor na porozumenie príčin stresu a rozvoj stratégií jeho
+        zvládania.
+      </p>
+
+      <p>
+        V krízových situáciách je nevyhnutné vyhľadať okamžitú odbornú pomoc
+        prostredníctvom liniek dôvery alebo zdravotníckych služieb.
+      </p>
+
+      <ul>
+        <li>Rodina a priatelia</li>
+        <li>Školský psychológ</li>
+        <li>Praktický lekár</li>
+        <li>Odborná psychoterapia</li>
+        <li>Linky dôvery a krízové centrá</li>
+      </ul>
+    </div>
+
+    <div class="visual">
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="Podpora a pomoc">
+    </div>
+  </div>
+</div>
+
+
+</main>
+</div>
+
+<footer>© 2026 – Edukačný projekt | Duševné zdravie</footer>
+
+<script>
+const questions=[
+"Často sa cítiš vyčerpaný?",
+"Máš problémy so spánkom?",
+"Premýšľaš nad povinnosťami aj večer?",
+"Cítiš tlak na výkon?",
+"Máš pocit, že nestíhaš?",
+"Si často podráždený?",
+"Máš bolesti hlavy?",
+"Máš problémy so sústredením?",
+"Zanedbávaš oddych?",
+"Cítiš úzkosť?"
+];
+
+document.getElementById("test").innerHTML =
+questions.map((q,i)=>`
+<div class="question">
+${i+1}. ${q}<br>
+<select id="q${i}" onchange="updateBar()">
+<option value="0">Nie</option>
+<option value="1">Niekedy</option>
+<option value="2">Často</option>
+</select>
+</div>
+`).join("");
+
+function updateBar(){
+let sum=0;
+for(let i=0;i<10;i++) sum+=Number(document.getElementById("q"+i).value);
+document.getElementById("bar").style.width=(sum/20*100)+"%";
+}
+
+function show(id,btn){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+btn.classList.add('active');
+}
+
+function evaluate(){
+let sum=0;
+for(let i=0;i<10;i++) sum+=Number(document.getElementById("q"+i).value);
+const r=document.getElementById("result");
+if(sum<=6){r.className="result low";r.textContent="Nízka úroveň stresu."}
+else if(sum<=13){r.className="result mid";r.textContent="Stredná úroveň stresu."}
+else{r.className="result high";r.textContent="Vysoká úroveň stresu – odporúča sa odborná pomoc."}
+}
+</script>
+
+</body>
+</html>
